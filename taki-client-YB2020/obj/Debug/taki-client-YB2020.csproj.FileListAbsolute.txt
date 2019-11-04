@@ -1,0 +1,11 @@
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\bin\Debug\taki-client-YB2020.exe.config
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\bin\Debug\taki-client-YB2020.exe
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\bin\Debug\taki-client-YB2020.pdb
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\obj\Debug\taki-client-YB2020.csprojAssemblyReference.cache
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\obj\Debug\taki_client_YB2020.Form1.resources
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\obj\Debug\taki_client_YB2020.Properties.Resources.resources
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\obj\Debug\taki-client-YB2020.csproj.GenerateResource.cache
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\obj\Debug\taki-client-YB2020.csproj.CoreCompileInputs.cache
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\obj\Debug\taki-client-YB2020.exe
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\obj\Debug\taki-client-YB2020.pdb
+C:\Users\Daniel\source\repos\taki-client-YB2020\taki-client-YB2020\obj\Debug\taki_client_YB2020.PlayingCard.resources
