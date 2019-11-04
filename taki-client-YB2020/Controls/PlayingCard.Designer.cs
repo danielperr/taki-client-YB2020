@@ -44,7 +44,7 @@
             this.mainLabel.OutlineWidth = 4F;
             this.mainLabel.Size = new System.Drawing.Size(124, 184);
             this.mainLabel.TabIndex = 1;
-            this.mainLabel.Text = "6";
+            this.mainLabel.Text = "TAKI";
             // 
             // PlayingCard
             // 
@@ -55,6 +55,7 @@
             this.Controls.Add(this.mainLabel);
             this.Name = "PlayingCard";
             this.Size = new System.Drawing.Size(124, 184);
+            this.Load += new System.EventHandler(this.PlayingCard_Load);
             this.ResumeLayout(false);
 
         }
