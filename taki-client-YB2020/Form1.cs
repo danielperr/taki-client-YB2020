@@ -14,6 +14,7 @@ namespace taki_client_YB2020
     public partial class Form1 : Form
     {
         public int playersNum = 4;
+        public int currentPlayer = 0;  // 0 = me, goes counter clockwise
 
         static Color[] bgGradColors = { Color.FromArgb(25, 64, 111), Color.FromArgb(57, 128, 227) };
         static Color[] ellipseGradColors = { Color.FromArgb(50, Color.White), Color.FromArgb(0, Color.White) };
@@ -53,9 +54,9 @@ namespace taki_client_YB2020
         {
             Rectangle[] ellipses = {
                 new Rectangle(ellipseMargin, Height-2*ellipseHeight, Width-2*ellipseMargin, 2*ellipseHeight),
+                new Rectangle(Width-ellipseHeight, ellipseMargin, 2*ellipseHeight, Height-2*ellipseMargin),
                 new Rectangle(ellipseMargin, -ellipseHeight, Width-2*ellipseMargin, 2*ellipseHeight),
-                new Rectangle(-ellipseHeight, ellipseMargin, 2*ellipseHeight, Height-2*ellipseMargin),
-                new Rectangle(Width-ellipseHeight, ellipseMargin, 2*ellipseHeight, Height-2*ellipseMargin)
+                new Rectangle(-ellipseHeight, ellipseMargin, 2*ellipseHeight, Height-2*ellipseMargin)
             };
             Graphics graphics = e.Graphics;
             for (int i = 0; i < Math.Min(playersNum, ellipses.Length); i++)
