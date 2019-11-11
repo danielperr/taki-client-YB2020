@@ -37,6 +37,8 @@ namespace taki_client_YB2020
 
         }
 
+        #region Drawing
+
         private void SetBackground(Object sender, PaintEventArgs e)
         {
             Graphics graphics = e.Graphics;
@@ -58,11 +60,11 @@ namespace taki_client_YB2020
                 new Rectangle(ellipseMargin, -ellipseHeight, Width-2*ellipseMargin, 2*ellipseHeight),
                 new Rectangle(-ellipseHeight, ellipseMargin, 2*ellipseHeight, Height-2*ellipseMargin)
             };
-            Graphics graphics = e.Graphics;
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             for (int i = 0; i < Math.Min(playersNum, ellipses.Length); i++)
             {
                 Brush brush = new LinearGradientBrush(ellipses[i], ellipseGradColors[0], ellipseGradColors[1], gradAngle);
-                graphics.FillEllipse(brush, ellipses[i]);
+                e.Graphics.FillEllipse(brush, ellipses[i]);
                 brush.Dispose();
             }
         }
@@ -76,5 +78,7 @@ namespace taki_client_YB2020
         {
 
         }
+
+        #endregion
     }
 }
