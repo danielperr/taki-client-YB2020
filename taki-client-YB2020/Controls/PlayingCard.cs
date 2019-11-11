@@ -32,7 +32,10 @@ namespace taki_client_YB2020
             "", "1", "2", "3", "4", "5", "6", "7", "8", "9", "2+", "+", "STOP", "TAKI", "Change Direction", "Change Color", "SUPER TAKI" };
         #endregion
 
+        [Description("The color of the TAKI card."), Category("Appearance")]
         public PCColor CardColor { get; set; }
+
+        [Description("The value of the TAKI card."), Category("Appearance")]
         public PCValue CardValue { get; set; }
 
         #region Constructors
@@ -103,7 +106,6 @@ namespace taki_client_YB2020
                 cblend.Positions = new float[4] { 0f, 0.5f, 0.8f, 1f };
                 gradBrush.InterpolationColors = cblend;
                 fillBrush = gradBrush;
-                gradBrush.Dispose();
             }
             Pen borderPen = new Pen(Color.Black);
             GraphicsPath path = new GraphicsPath();
@@ -115,7 +117,6 @@ namespace taki_client_YB2020
                 path.AddString(lines[0], new FontFamily("Arial"), 0, 26, new Rectangle(0, 0, Width, Height / 2), sf);
                 sf.LineAlignment = StringAlignment.Near;
                 path.AddString(lines[1], new FontFamily("Arial"), 0, 26, new Rectangle(0, Height / 2, Width, Height / 2), sf);
-                e.Graphics.FillPath(fillBrush, path);
             }
             else  // One line
             {
@@ -123,8 +124,9 @@ namespace taki_client_YB2020
                 if (text.Length > 2)
                     size = 36;
                 path.AddString(text, new FontFamily("Arial"), 0, size, new Rectangle(0, 0, Width, Height), sf);
-                e.Graphics.DrawPath(borderPen, path);
             }
+            e.Graphics.FillPath(fillBrush, path);
+            e.Graphics.DrawPath(borderPen, path);
             //
             sf.Dispose();
             fillBrush.Dispose();
