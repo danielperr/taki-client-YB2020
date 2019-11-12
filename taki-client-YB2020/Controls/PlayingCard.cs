@@ -11,25 +11,24 @@ using System.Windows.Forms;
 
 namespace taki_client_YB2020
 {
-    public enum PCColor { Green, Red, Yellow, Blue }  // PLAYING CARD COLOR
+    public enum PCColor { Green, Red, Yellow, Blue, All }  // PLAYING CARD COLOR (All = super taki or change color)
     public enum PCValue {  // PLAYING CARD VALUE (None = back of the card)
-        None, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, TakeTwo, Plus, Stop, Taki, Chdir, Chcol, SuperTaki }
+        None, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, TakeTwo, Plus, Stop, Taki, Chdir, Chcol }
 
     public partial class PlayingCard : UserControl
     {
         #region Constants
         // Colors
-        static Color backColor = Color.BlueViolet;
+        static Color backColor = Color.FromArgb(176, 190, 197);
         static Color frontColor = Color.White;
         static Color[] colors = { Color.Green, Color.Red, Color.Yellow, Color.Blue };
-        static float[] fontSizes = { 84, 64, 52 };
 
         // Dimensions
         static int roundedRectRadius = 12;  // rounded rectangle circle radius
 
         // Values
         static string[] value2text = {
-            "", "1", "2", "3", "4", "5", "6", "7", "8", "9", "2+", "+", "STOP", "TAKI", "Change Direction", "Change Color", "SUPER TAKI" };
+            "", "1", "2", "3", "4", "5", "6", "7", "8", "9", "2+", "+", "STOP", "TAKI", "Change Direction", "Change Color" };
         #endregion
 
         [Description("The color of the TAKI card."), Category("Appearance")]
@@ -59,8 +58,8 @@ namespace taki_client_YB2020
         #region Paint Events
         private void AddPaintHandlers()
         {
-            this.Paint += new PaintEventHandler(DrawBackground);
-            this.Paint += new PaintEventHandler(DrawValue);
+            Paint += new PaintEventHandler(DrawBackground);
+            Paint += new PaintEventHandler(DrawValue);
         }
 
         private void DrawBackground(object sender, PaintEventArgs e)
@@ -79,7 +78,7 @@ namespace taki_client_YB2020
             path.AddArc(0, 0, d, d, 180, 90);
             //
             Color color = CardValue == PCValue.None ? backColor : frontColor;
-            Brush brush = new LinearGradientBrush(new Rectangle(0, 0, Width, Height), color, ControlPaint.Dark(color, 0.05f), 225f);
+            Brush brush = new LinearGradientBrush(new Rectangle(0, 0, Width, Height), ControlPaint.Light(color, 0.01f), ControlPaint.Dark(color, 0.01f), 225f);
             Pen blackPen = new Pen(Color.Black);
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.FillPath(brush, path);
@@ -97,8 +96,8 @@ namespace taki_client_YB2020
             sf.LineAlignment = StringAlignment.Center;
             sf.Alignment = StringAlignment.Center;
             //
-            Brush fillBrush = new SolidBrush(colors[(int)CardColor]);
-            if (CardValue == PCValue.SuperTaki)  // super taki rainbow party
+            Brush fillBrush;
+            if (CardColor == PCColor.All)  // rainbow party
             {
                 LinearGradientBrush gradBrush = new LinearGradientBrush(new Rectangle(0, 0, Width, Height), Color.Red, Color.Yellow, 0f);
                 ColorBlend cblend = new ColorBlend(4);
@@ -107,6 +106,8 @@ namespace taki_client_YB2020
                 gradBrush.InterpolationColors = cblend;
                 fillBrush = gradBrush;
             }
+            else
+                fillBrush = new SolidBrush(colors[(int)CardColor]);
             Pen borderPen = new Pen(Color.Black);
             GraphicsPath path = new GraphicsPath();
             //
