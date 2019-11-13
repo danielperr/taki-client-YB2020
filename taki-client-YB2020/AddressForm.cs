@@ -26,6 +26,7 @@ namespace taki_client_YB2020
         {
             IP = ipTextBox.Text;
             Port = int.Parse(portTextBox.Text);
+            Password = passwdTextBox.Text;
             Close();
         }
 

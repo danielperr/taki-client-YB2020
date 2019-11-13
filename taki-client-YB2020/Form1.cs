@@ -33,6 +33,9 @@ namespace taki_client_YB2020
         private List<PlayingCard> player2Cards;
         private List<PlayingCard> player3Cards;
 
+        private int historyIndex = 0;
+        private List<string[]> lastHand = new List<string[]>();
+
         public Form1()
         {
             myCards = new List<PlayingCard>();
@@ -54,12 +57,13 @@ namespace taki_client_YB2020
             addressForm.ShowDialog();
             if (addressForm.IP == null)  // Pressed quit or closed window
                 Close();
-            try { ConnectToServer(addressForm.IP, addressForm.Port, addressForm.Password); }
+            /*try { ConnectToServer(addressForm.IP, addressForm.Port, addressForm.Password); }
             catch
             {  // Fire up error message
                 MessageBox.Show("Failed to connect to the address specified", "Socket error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
-            }
+            }*/
+            ConnectToServer(addressForm.IP, addressForm.Port, addressForm.Password);
         }
 
         #region Playing Cards
@@ -88,9 +92,9 @@ namespace taki_client_YB2020
             Controls.Remove(cardToPlace);
             cardToPlace.CardColor = color;  // TODO: try to dispose
             // Change the pile card
-            pile.CardColor = color;
+            /*pile.CardColor = color;
             pile.CardValue = value;
-            pile.Invalidate();
+            pile.Invalidate();*/
             RearrangeMyCards();
         }
 
@@ -212,6 +216,8 @@ namespace taki_client_YB2020
             for (int i = 0; i < Math.Min(playersNum, ellipses.Length); i++)
             {
                 Brush brush = new LinearGradientBrush(ellipses[i], ellipseGradColors[0], ellipseGradColors[1], gradAngle);
+                if (currentPlayer == i)
+                    brush = new LinearGradientBrush(ellipses[i], selectedEllipseGradColors[0], selectedEllipseGradColors[1], gradAngle);
                 e.Graphics.FillEllipse(brush, ellipses[i]);
                 brush.Dispose();
             }
@@ -224,32 +230,31 @@ namespace taki_client_YB2020
 
         #endregion
 
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            AddToMyCards(PCColor.All, PCValue.Taki);
-            AddToMyCards(PCColor.All, PCValue.Chcol);
-            AddToMyCards(PCColor.Green, PCValue.Chdir);
-            AddToMyCards(PCColor.Green, PCValue.Stop);
-            AddToMyCards(PCColor.Green, PCValue.One);
-            AddToMyCards(PCColor.Red, PCValue.Two);
-            AddToMyCards(PCColor.Red, PCValue.TakeTwo);
-            AddToMyCards(PCColor.Red, PCValue.Three);
-            AddToMyCards(PCColor.Blue, PCValue.Four);
-            AddToMyCards(PCColor.Blue, PCValue.Five);
-            AddToMyCards(PCColor.Blue, PCValue.Six);
-            AddToMyCards(PCColor.Yellow, PCValue.Seven);
-            AddToMyCards(PCColor.Yellow, PCValue.Eight);
-            AddToMyCards(PCColor.Yellow, PCValue.Nine);
-            AddToMyCards(PCColor.Yellow, PCValue.Plus);
-            SetPlayerCards(1, 8);
-            SetPlayerCards(2, 8);
-            SetPlayerCards(3, 8);
-        }
 
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            PlaceCard(PCColor.Blue, PCValue.Chcol);
-        }
 
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            if (turnHistory.Count == 0)
+                return;
+            int i = historyIndex;
+            currentPlayer = turnHistory[i];
+            pile.CardColor = (PCColor)Array.IndexOf(text2color, pileHistory[i][0]);
+            pile.CardValue = (PCValue)Array.IndexOf(text2value, pileHistory[i][1]);
+            for (int j = 0; j < othersCountHistory[i].Length; j++)
+                SetPlayerCards(j, othersCountHistory[i][j]);
+            //
+            List<string[]> diff = handHistory[i].Where(p => !lastHand.Any(l => p[0] == l[0] && p[1] == l[1])).ToList();
+            if (handHistory[i].Count > lastHand.Count)
+                foreach (string[] card in diff)
+                    AddToMyCards((PCColor)Array.IndexOf(text2color, card[0]), (PCValue)Array.IndexOf(text2value, card[1]));
+            else
+                foreach (string[] card in diff)
+                    PlaceCard((PCColor)Array.IndexOf(text2color, card[0]), (PCValue)Array.IndexOf(text2value, card[1]));
+            //
+            Invalidate();
+            pile.Invalidate();
+            historyIndex = Math.Min(historyIndex + 1, turnHistory.Count - 1);
+            lastHand = handHistory[i];
+        }
     }
 }

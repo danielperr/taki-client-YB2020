@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 
-namespace Taki_Project
+namespace taki-client-YB2020
 {
     class Game
     {
