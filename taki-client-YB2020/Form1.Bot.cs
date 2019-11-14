@@ -12,12 +12,14 @@ namespace taki_client_YB2020
     {
         private Socket server;
 
-        private void ConnectToServer(string ip, int port)
+        private void ConnectToServer(string ip, int port, string passwd)
         {
             server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             server.Connect(ip, port);
 
-            // Bot code
+            // Send password
+
+            // Bot
         }
 
 

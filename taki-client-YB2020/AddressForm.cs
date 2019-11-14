@@ -15,6 +15,7 @@ namespace taki_client_YB2020
     {
         public string IP;
         public int Port;
+        public string Password;
 
         public AddressForm()
         {

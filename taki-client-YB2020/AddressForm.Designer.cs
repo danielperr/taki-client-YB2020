@@ -35,8 +35,11 @@
             this.portTextBox = new System.Windows.Forms.TextBox();
             this.goButton = new System.Windows.Forms.Button();
             this.quitButton = new System.Windows.Forms.Button();
+            this.passwdGroupBox = new System.Windows.Forms.GroupBox();
+            this.passwdTextBox = new System.Windows.Forms.TextBox();
             this.ipGroupBox.SuspendLayout();
             this.portGroupBox.SuspendLayout();
+            this.passwdGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // ipGroupBox
@@ -87,7 +90,7 @@
             // 
             this.goButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.goButton.Enabled = false;
-            this.goButton.Location = new System.Drawing.Point(137, 126);
+            this.goButton.Location = new System.Drawing.Point(137, 186);
             this.goButton.Name = "goButton";
             this.goButton.Size = new System.Drawing.Size(75, 23);
             this.goButton.TabIndex = 3;
@@ -99,12 +102,33 @@
             // 
             this.quitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.quitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.quitButton.Location = new System.Drawing.Point(12, 126);
+            this.quitButton.Location = new System.Drawing.Point(12, 186);
             this.quitButton.Name = "quitButton";
             this.quitButton.Size = new System.Drawing.Size(75, 23);
             this.quitButton.TabIndex = 2;
             this.quitButton.Text = "Quit";
             this.quitButton.UseVisualStyleBackColor = true;
+            // 
+            // passwdGroupBox
+            // 
+            this.passwdGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.passwdGroupBox.Controls.Add(this.passwdTextBox);
+            this.passwdGroupBox.Location = new System.Drawing.Point(12, 120);
+            this.passwdGroupBox.Name = "passwdGroupBox";
+            this.passwdGroupBox.Size = new System.Drawing.Size(200, 48);
+            this.passwdGroupBox.TabIndex = 2;
+            this.passwdGroupBox.TabStop = false;
+            this.passwdGroupBox.Text = "Password";
+            // 
+            // passwdTextBox
+            // 
+            this.passwdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.passwdTextBox.Location = new System.Drawing.Point(6, 19);
+            this.passwdTextBox.Name = "passwdTextBox";
+            this.passwdTextBox.Size = new System.Drawing.Size(188, 20);
+            this.passwdTextBox.TabIndex = 1;
             // 
             // AddressForm
             // 
@@ -112,20 +136,23 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.quitButton;
-            this.ClientSize = new System.Drawing.Size(224, 161);
+            this.ClientSize = new System.Drawing.Size(224, 221);
+            this.Controls.Add(this.passwdGroupBox);
             this.Controls.Add(this.quitButton);
             this.Controls.Add(this.goButton);
             this.Controls.Add(this.portGroupBox);
             this.Controls.Add(this.ipGroupBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(240, 200);
-            this.MinimumSize = new System.Drawing.Size(240, 200);
+            this.MaximumSize = new System.Drawing.Size(240, 260);
+            this.MinimumSize = new System.Drawing.Size(240, 260);
             this.Name = "AddressForm";
             this.Text = "Server Address Selection";
             this.ipGroupBox.ResumeLayout(false);
             this.ipGroupBox.PerformLayout();
             this.portGroupBox.ResumeLayout(false);
             this.portGroupBox.PerformLayout();
+            this.passwdGroupBox.ResumeLayout(false);
+            this.passwdGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -138,5 +165,7 @@
         private System.Windows.Forms.TextBox ipTextBox;
         private System.Windows.Forms.Button goButton;
         private System.Windows.Forms.Button quitButton;
+        private System.Windows.Forms.GroupBox passwdGroupBox;
+        private System.Windows.Forms.TextBox passwdTextBox;
     }
 }

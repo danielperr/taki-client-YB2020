@@ -54,7 +54,7 @@ namespace taki_client_YB2020
             addressForm.ShowDialog();
             if (addressForm.IP == null)  // Pressed quit or closed window
                 Close();
-            try { ConnectToServer(addressForm.IP, addressForm.Port); }
+            try { ConnectToServer(addressForm.IP, addressForm.Port, addressForm.Password); }
             catch
             {  // Fire up error message
                 MessageBox.Show("Failed to connect to the address specified", "Socket error", MessageBoxButtons.OK, MessageBoxIcon.Error);
