@@ -48,6 +48,19 @@ namespace taki_client_YB2020
             Paint += new PaintEventHandler(SetBackground);
             Paint += new PaintEventHandler(DrawEllipses);
         }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            AddressForm addressForm = new AddressForm();
+            addressForm.ShowDialog();
+            if (addressForm.IP == null)  // Pressed quit or closed window
+                Close();
+            try { ConnectToServer(addressForm.IP, addressForm.Port, addressForm.Password); }
+            catch
+            {  // Fire up error message
+                MessageBox.Show("Failed to connect to the address specified", "Socket error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+            }
+        }
 
         #region Playing Cards
         public void AddToMyCards(PCColor color, PCValue value)
@@ -237,5 +250,6 @@ namespace taki_client_YB2020
         {
             PlaceCard(PCColor.Blue, PCValue.Chcol);
         }
+
     }
 }
