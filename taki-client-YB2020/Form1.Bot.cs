@@ -43,9 +43,9 @@ namespace taki_client_YB2020
         private void BotInput(string input)
         {
             if (response.IndexOf("\"command\": \"Game Over\"") > -1)
-                response = response.Substring(0, response.Length - 61);
+                return;
 
-            try
+            //try
             {
                 dynamic jsonObj = JObject.Parse(response);
                 Console.WriteLine(jsonObj.ToString());
@@ -75,6 +75,7 @@ namespace taki_client_YB2020
 
                 if (takiState != "")
                 {
+                    Console.WriteLine("\n\tTAKI STATE = " + takiState);
                     cardToSend = FindByColor(hand, takiState);
                     if (CountColor(hand, takiState) == 1)
                     {
@@ -82,13 +83,14 @@ namespace taki_client_YB2020
                         order = "close taki";
                     }
                 }
-                else if (pileValue == "+2")
+                else if (pileValue == "+2" && cardToSend == null)
                 {
                     cardToSend = FindByValue(hand, "+2");
                 }
                 else
                 {
-                    cardToSend = FindByValue(hand, "+");
+                    if (cardToSend == null)
+                        cardToSend = FindByBoth(hand, pileColor, "+");
 
                     if (cardToSend == null)
                         cardToSend = FindByColor(hand, pileColor);
@@ -97,39 +99,47 @@ namespace taki_client_YB2020
                         cardToSend = FindByValue(hand, pileValue);
 
                     if (cardToSend == null)
-                        cardToSend = FindByValue(hand, "CHDIR");
+                        cardToSend = FindByBoth(hand, pileColor, "CHDIR");
 
                     if (cardToSend == null)
-                        cardToSend = FindByValue(hand, "STOP");
+                        cardToSend = FindByBoth(hand, pileColor, "STOP");
 
                     if (cardToSend == null)
                     {
                         cardToSend = FindByValue(hand, "CHCOL");
-                        order = MostCommonColor(hand);
+                        if (cardToSend != null)
+                            order = MostCommonColor(hand);
                     }
 
                     if (cardToSend == null)
                     {
                         cardToSend = FindByBoth(hand, "ALL", "TAKI");
-                        order = MostCommonColor(hand);
-                        takiState = order;
+                        Console.WriteLine("CARDTOSEND == null? ", (cardToSend == null).ToString());
+                        if (cardToSend != null)
+                        {
+                            order = MostCommonColor(hand);
+                            takiState = order;
+                        }
                     }
 
                     if (cardToSend == null)
                         cardToSend = FindByValue(hand, "+2");
                 }
 
+                if (cardToSend == null)
+                    order = "draw card";
+
                 string data;
                 if (cardToSend == null)
                     data = "{\"card\": {\"color\": \"\", \"value\": \"\"}, \"order\": \"" + order + "\"}";
                 else
                     data = "{\"card\": {\"color\": \"" + cardToSend.color.ToString() + "\", \"value\": \"" + cardToSend.value.ToString() + "\"}, \"order\": \"" + order + "\"}";
-                Console.WriteLine(data);
+                Console.WriteLine("\n\n\n" + data + "\n\n\n");
                 Send(server, data);
                 Thread.Sleep(100);
 
             }
-            catch { return; }
+            //catch { return; }
         }
 
         private dynamic FindByValue(dynamic[] hand, string value)
@@ -150,7 +160,7 @@ namespace taki_client_YB2020
             return result;
         }
 
-        private dynamic FindByBoth(dynamic[] hand, dynamic color, dynamic value)
+        private dynamic FindByBoth(dynamic[] hand, string color, string value)
         {
             dynamic result = null;
             foreach (dynamic card in hand)
@@ -164,13 +174,13 @@ namespace taki_client_YB2020
             Dictionary<string, int> occurrences = new Dictionary<string, int>();
             foreach (dynamic card in hand)
             {
-                string value = card.value.ToString();
-                if (occurrences.ContainsKey(value))
-                    occurrences[value]++;
+                string color = card.color.ToString();
+                if (occurrences.ContainsKey(color))
+                    occurrences[color]++;
                 else
-                    occurrences.Add(value, 1);
+                    occurrences.Add(color, 1);
             }
-            return occurrences.Max().Key;
+            return occurrences.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
         }
 
         private int CountColor(dynamic[] hand, string color)
@@ -178,11 +188,11 @@ namespace taki_client_YB2020
             Dictionary<string, int> occurrences = new Dictionary<string, int>();
             foreach (dynamic card in hand)
             {
-                string value = card.value.ToString();
-                if (occurrences.ContainsKey(value))
-                    occurrences[value]++;
+                string col = card.color.ToString();
+                if (occurrences.ContainsKey(col))
+                    occurrences[col]++;
                 else
-                    occurrences.Add(value, 1);
+                    occurrences.Add(col, 1);
             }
             if (occurrences.ContainsKey(color))
                 return occurrences[color];
@@ -209,7 +219,8 @@ namespace taki_client_YB2020
             Receive(server);
             recvd.WaitOne();
             recvd.Reset();
-            dynamic jsonObj = JObject.Parse(response);
+            Console.WriteLine(response);
+            dynamic jsonObj = JObject.Parse(response.Substring(0, 42));
             string command = jsonObj.command.ToString();
             myID = int.Parse(command[command.Length - 1].ToString());
 

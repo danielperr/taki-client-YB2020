@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taki_client_YB2020
@@ -243,13 +238,10 @@ namespace taki_client_YB2020
             for (int j = 0; j < othersCountHistory[i].Length; j++)
                 SetPlayerCards(j, othersCountHistory[i][j]);
             //
-            List<string[]> diff = handHistory[i].Where(p => !lastHand.Any(l => p[0] == l[0] && p[1] == l[1])).ToList();
-            if (handHistory[i].Count > lastHand.Count)
-                foreach (string[] card in diff)
-                    AddToMyCards((PCColor)Array.IndexOf(text2color, card[0]), (PCValue)Array.IndexOf(text2value, card[1]));
-            else
-                foreach (string[] card in diff)
-                    PlaceCard((PCColor)Array.IndexOf(text2color, card[0]), (PCValue)Array.IndexOf(text2value, card[1]));
+            while (myCards.Count > 0)
+                PlaceCard(myCards[0].CardColor, myCards[0].CardValue);
+            for (int j = 0; j < handHistory[i].Count; j++)
+                AddToMyCards((PCColor)Array.IndexOf(text2color, handHistory[i][j][0]), (PCValue)Array.IndexOf(text2value, handHistory[i][j][1]));
             //
             Invalidate();
             pile.Invalidate();
