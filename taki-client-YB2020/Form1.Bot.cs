@@ -95,8 +95,22 @@ namespace taki_client_YB2020
                     if (cardToSend == null)
                         cardToSend = FindByColor(hand, pileColor);
 
-                    if (cardToSend == null)
-                        cardToSend = FindByValue(hand, pileValue);
+                    if (cardToSend == null && pileValue != "CHCOL")
+                    {
+                        dynamic cardInQuestion = FindByValue(hand, pileValue);
+                        if (cardInQuestion.value.ToString() == "TAKI")
+                        {
+                            if (cardInQuestion.color.ToString() == "ALL")
+                                cardToSend = null;  // we configure super taki later
+                            else
+                            {
+                                cardToSend = cardInQuestion;
+                                takiState = cardInQuestion.color.ToString();
+                            }
+                        }
+                        else
+                            cardToSend = cardInQuestion;
+                    }
 
                     if (cardToSend == null)
                         cardToSend = FindByBoth(hand, pileColor, "CHDIR");

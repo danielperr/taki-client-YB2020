@@ -28,7 +28,10 @@ namespace taki_client_YB2020
         private List<PlayingCard> player2Cards;
         private List<PlayingCard> player3Cards;
 
-        private int historyIndex = 0;
+        private int handHistoryIndex = 0;
+        private int pileHistoryIndex = 0;
+        private int othersHistoryIndex = 0;
+        private int turnHistoryIndex = 0;
         private List<string[]> lastHand = new List<string[]>();
 
         public Form1()
@@ -231,22 +234,24 @@ namespace taki_client_YB2020
         {
             if (turnHistory.Count == 0)
                 return;
-            int i = historyIndex;
-            currentPlayer = turnHistory[i];
-            pile.CardColor = (PCColor)Array.IndexOf(text2color, pileHistory[i][0]);
-            pile.CardValue = (PCValue)Array.IndexOf(text2value, pileHistory[i][1]);
-            for (int j = 0; j < othersCountHistory[i].Length; j++)
-                SetPlayerCards(j, othersCountHistory[i][j]);
+            currentPlayer = (turnHistory[turnHistoryIndex] - myID + playersNum) % playersNum;
+            pile.CardColor = (PCColor)Array.IndexOf(text2color, pileHistory[pileHistoryIndex][0]);
+            pile.CardValue = (PCValue)Array.IndexOf(text2value, pileHistory[pileHistoryIndex][1]);
+            for (int j = 0; j < othersCountHistory[othersHistoryIndex].Length; j++)
+                SetPlayerCards(j, othersCountHistory[othersHistoryIndex][j]);
             //
             while (myCards.Count > 0)
                 PlaceCard(myCards[0].CardColor, myCards[0].CardValue);
-            for (int j = 0; j < handHistory[i].Count; j++)
-                AddToMyCards((PCColor)Array.IndexOf(text2color, handHistory[i][j][0]), (PCValue)Array.IndexOf(text2value, handHistory[i][j][1]));
+            for (int j = 0; j < handHistory[handHistoryIndex].Count; j++)
+                AddToMyCards((PCColor)Array.IndexOf(text2color, handHistory[handHistoryIndex][j][0]), (PCValue)Array.IndexOf(text2value, handHistory[handHistoryIndex][j][1]));
             //
             Invalidate();
             pile.Invalidate();
-            historyIndex = Math.Min(historyIndex + 1, turnHistory.Count - 1);
-            lastHand = handHistory[i];
+            lastHand = handHistory[handHistoryIndex];
+            handHistoryIndex = Math.Min(handHistoryIndex + 1, handHistory.Count - 1);
+            othersHistoryIndex = Math.Min(othersHistoryIndex + 1, othersCountHistory.Count - 1);
+            pileHistoryIndex = Math.Min(pileHistoryIndex + 1, pileHistory.Count - 1);
+            turnHistoryIndex = Math.Min(turnHistoryIndex + 1, turnHistory.Count - 1);
         }
     }
 }
