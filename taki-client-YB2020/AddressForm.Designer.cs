@@ -62,6 +62,7 @@
             this.ipTextBox.Name = "ipTextBox";
             this.ipTextBox.Size = new System.Drawing.Size(188, 20);
             this.ipTextBox.TabIndex = 0;
+            this.ipTextBox.Text = "127.0.01";
             this.ipTextBox.TextChanged += new System.EventHandler(this.IpTextBox_TextChanged);
             // 
             // portGroupBox
@@ -84,12 +85,12 @@
             this.portTextBox.Name = "portTextBox";
             this.portTextBox.Size = new System.Drawing.Size(188, 20);
             this.portTextBox.TabIndex = 1;
+            this.portTextBox.Text = "50000";
             this.portTextBox.TextChanged += new System.EventHandler(this.PortTextBox_TextChanged);
             // 
             // goButton
             // 
             this.goButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.goButton.Enabled = false;
             this.goButton.Location = new System.Drawing.Point(137, 186);
             this.goButton.Name = "goButton";
             this.goButton.Size = new System.Drawing.Size(75, 23);
@@ -129,6 +130,7 @@
             this.passwdTextBox.Name = "passwdTextBox";
             this.passwdTextBox.Size = new System.Drawing.Size(188, 20);
             this.passwdTextBox.TabIndex = 1;
+            this.passwdTextBox.Text = "1234";
             // 
             // AddressForm
             // 
