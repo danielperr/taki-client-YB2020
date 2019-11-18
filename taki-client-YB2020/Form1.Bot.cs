@@ -45,7 +45,7 @@ namespace taki_client_YB2020
             if (response.IndexOf("\"command\": \"Game Over\"") > -1)
                 return;
 
-           // try
+           try
             {
                 dynamic jsonObj = JObject.Parse(response);
                 Console.WriteLine(jsonObj.ToString());
@@ -153,7 +153,7 @@ namespace taki_client_YB2020
                 Thread.Sleep(100);
 
             }
-            //catch { return; }
+            catch { return; }
         }
 
         private dynamic FindByValue(dynamic[] hand, string value)
