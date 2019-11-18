@@ -45,7 +45,7 @@ namespace taki_client_YB2020
             if (response.IndexOf("\"command\": \"Game Over\"") > -1)
                 return;
 
-            //try
+           // try
             {
                 dynamic jsonObj = JObject.Parse(response);
                 Console.WriteLine(jsonObj.ToString());
@@ -98,7 +98,7 @@ namespace taki_client_YB2020
                     if (cardToSend == null && pileValue != "CHCOL")
                     {
                         dynamic cardInQuestion = FindByValue(hand, pileValue);
-                        if (cardInQuestion.value.ToString() == "TAKI")
+                        if (cardInQuestion != null && cardInQuestion.value.ToString() == "TAKI")
                         {
                             if (cardInQuestion.color.ToString() == "ALL")
                                 cardToSend = null;  // we configure super taki later
@@ -128,7 +128,7 @@ namespace taki_client_YB2020
                     if (cardToSend == null)
                     {
                         cardToSend = FindByBoth(hand, "ALL", "TAKI");
-                        Console.WriteLine("CARDTOSEND == null? ", (cardToSend == null).ToString());
+                        Console.WriteLine("CARDTOSEND == null? " + (cardToSend == null).ToString());
                         if (cardToSend != null)
                         {
                             order = MostCommonColor(hand);
@@ -137,7 +137,7 @@ namespace taki_client_YB2020
                     }
 
                     if (cardToSend == null)
-                        cardToSend = FindByValue(hand, "+2");
+                        cardToSend = FindByBoth(hand, pileColor, "+2");
                 }
 
                 if (cardToSend == null)
